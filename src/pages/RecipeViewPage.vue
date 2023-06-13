@@ -9,13 +9,14 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <div>Ready in {{ recipe.CookingTime }} minutes</div>
+              <div>Likes: {{ recipe.Likes }}</div>
+              <div>servings: {{ recipe.servings }}</div>
             </div>
             Ingredients:
             <ul>
               <li
-                v-for="(r, index) in recipe.extendedIngredients"
+                v-for="(r, index) in recipe.ingredients"
                 :key="index + '_' + r.id"
               >
                 {{ r.original }}
@@ -23,6 +24,11 @@
             </ul>
           </div>
           <div class="wrapped">
+            <div class="mb-3">
+              <div>GlutenFree: {{ recipe.GlutenFree }}</div>
+              <div>isVegan: {{ recipe.isVegan }}</div>
+              <div>isVegetarian: {{ recipe.isVegetarian }}</div>
+            </div>
             Instructions:
             <ol>
               <li v-for="s in recipe._instructions" :key="s.number">
@@ -32,11 +38,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
@@ -51,50 +52,46 @@ export default {
   async created() {
     try {
       let response;
-      // response = this.$route.params.response;
-
       try {
         response = await this.axios.get(
-          // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + "/recipes/info",
-          {
-            params: { id: this.$route.params.recipeId }
-          }
+          this.$root.store.server_domain + "/recipes/showFullRecipe/" + this.$route.params.recipeId
         );
-
-        // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
-
       let {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
+        id,
+        title,
         image,
-        title
-      } = response.data.recipe;
-
-      let _instructions = analyzedInstructions
+        CookingTime,
+        Likes,
+        GlutenFree,
+        isVegan,
+        isVegetarian,
+        ingredients,
+        instructions,
+        servings
+    } = response.data;
+      let _instructions = instructions
         .map((fstep) => {
           fstep.steps[0].step = fstep.name + fstep.steps[0].step;
           return fstep.steps;
         })
         .reduce((a, b) => [...a, ...b], []);
-
       let _recipe = {
         instructions,
         _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
+        ingredients,
+        Likes,
+        CookingTime,
         image,
+        GlutenFree,
+        isVegan,
+        isVegetarian,
+        servings,
         title
       };
 
