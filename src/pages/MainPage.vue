@@ -27,12 +27,18 @@ export default {
 
 <style lang="scss" scoped>
 .RandomRecipes {
-  margin: 10px 0 10px;
+  margin: 3vw 0 3vw;
 }
 .blur {
   -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
   filter: blur(2px);
 }
+
+.container {
+  font-family: inherit;
+  font-weight: bold;
+}
+
 ::v-deep .blur .recipe-preview {
   pointer-events: none;
   cursor: default;
