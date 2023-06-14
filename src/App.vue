@@ -15,7 +15,7 @@
         <router-link :to="{ name: 'login' }">Login</router-link>
       </span>
       <span v-else class="username-text">
-        {{ "Hello " + $root.store.username + "!"}}
+        {{ "Welcome " + $root.store.username + "!"}}
 
         <span class="link-space"></span>
 
@@ -92,9 +92,9 @@ export default {
 
 #nav {
   background-color: #CD853F;
-  padding: 1vw;
+  padding: 0.1vw;
   color: black;
-  letter-spacing: 0.1vw;
+  letter-spacing: 0.05vw;
 }
 
 #nav a {
@@ -112,15 +112,15 @@ export default {
   font-weight: bold;
   font-size: 2.5vw;
   font-family: inherit;
-  color: black;
+  color: white;
 }
 
 .link-space {
-  margin-right: 2vw; /* Adjust the spacing as needed */
+  margin-right: 1.5vw; /* Adjust the spacing as needed */
 }
 
 .link-space2 {
-  margin-right: 6vw; /* Adjust the spacing as needed */
+  margin-right: 3vw; /* Adjust the spacing as needed */
 }
 
 .logout-button {
@@ -128,9 +128,9 @@ export default {
   background-color: white;
   font-weight: bold;
   color: black;
-  padding: 0.5vw 1vw;
+  padding: 0.02vw 0.3vw;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.2vw;
   font-size: 2vw;
   cursor: pointer;
 }
@@ -140,10 +140,8 @@ export default {
   /* Add your desired styles for the dropdown here */
   color: #42b983; /* Red text color */
   background-color: black; /* Light gray background color */
-  padding: 0.5vw 1vw;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1.8vw;
+  padding: 0.1vw 0.1vw;
+  font-size: 2vw;
   cursor: pointer;
 }
 
@@ -152,6 +150,7 @@ export default {
   color: #CD853F; /* Blue text color */
   background-color: black; /* White background color */
   font-weight: bold;
+  font-size: 1.2vw;
   border: none;
   outline: none;
   font-size: 2vw;
@@ -161,6 +160,7 @@ export default {
   /* Add your desired styles for the options here */
   color: #2c3e50; /* Green text color */
   font-weight: bold;
+  font-size: 1.2vw;
   background-color: #f0f0f0; /* Light gray background color */
 }
 
