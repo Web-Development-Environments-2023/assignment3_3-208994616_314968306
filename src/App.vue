@@ -36,7 +36,7 @@
 
         <span class="link-space"></span>
 
-        <router-link :to="{ name: 'newRecipe' }">New Recipe</router-link>
+        <button @click="openNewRecipeModal">New Recipe</button>
 
         <span class="link-space2"></span>
 
@@ -44,12 +44,21 @@
       </span>
     </div>
     <router-view />
+    <b-container class="container">
+      <b-modal id="new-recipe-modal" title="New Recipe" @hidden="openNewRecipeModal">
+        <NewRecipeModal />
+      </b-modal>
+    </b-container>
   </div>
 </template>
 
 <script>
+import NewRecipeModal from "@/components/AddNewRecipeModal.vue";
 export default {
   name: "App",
+  components: {
+    NewRecipeModal
+  },
   methods: {
     handleDropdownChange(event) {
       const selectedOption = event.target.value;
@@ -70,6 +79,9 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    async openNewRecipeModal() {
+      this.$bvModal.show('new-recipe-modal');
     }
   }
 };
