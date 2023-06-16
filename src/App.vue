@@ -56,11 +56,9 @@
     </b-navbar>
 
     <router-view />
-    <b-container class="container">
-      <b-modal id="new-recipe-modal" title="New Recipe" @hidden="openNewRecipeModal">
+      <b-modal id="new-recipe-modal" ref="newRecipeModal" title="Add New Personal Recipe" size="lg" ok-only hide-footer>
         <NewRecipeModal />
       </b-modal>
-    </b-container>
   </div>
 </template>
 
@@ -84,7 +82,7 @@ export default {
       });
     },
     async openNewRecipeModal() {
-      this.$bvModal.show('new-recipe-modal');
+      this.$refs.newRecipeModal.show();
     }
   }
 };
