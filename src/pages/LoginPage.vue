@@ -93,19 +93,13 @@ export default {
     },
     async Login() {
       try {
-        console.log("route: ",this.$root.store.server_domain)
         const response = await this.axios.post(
         this.$root.store.server_domain +"/Login",
-          //"http://localhost:3000/Login",
-
           {
             username: this.form.username,
             password: this.form.password
           }
         );
-        // console.log(response);
-        // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
         this.$router.push("/");
       } catch (err) {
@@ -114,14 +108,11 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
-
       this.Login();
     }
   }

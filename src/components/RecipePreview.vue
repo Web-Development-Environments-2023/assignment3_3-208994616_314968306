@@ -21,9 +21,14 @@
 <script>
 export default {
   mounted() {
+    try {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
+  } catch (error) {
+    console.error("Failed to fetch the image:", error);
+    this.image_load = false;
+  }
   },
   data() {
     return {

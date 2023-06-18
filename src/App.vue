@@ -14,7 +14,7 @@
           <b-nav-item>
             <router-link :to="{ name: 'about' }">About Us</router-link>
           </b-nav-item>
-          <b-nav-item-dropdown text="Personal" right v-if="$root.store.username">
+          <b-nav-item-dropdown text="User Pages" right v-if="$root.store.username">
             <b-dropdown-group>
               <b-dropdown-item>
                 <router-link :to="{ name: 'favorites' }">Favorites</router-link>
@@ -56,7 +56,7 @@
     </b-navbar>
 
     <router-view />
-      <b-modal id="new-recipe-modal" ref="newRecipeModal" title="Add New Personal Recipe" size="lg" ok-only hide-footer>
+      <b-modal id="new-recipe-modal" ref="newRecipeModal" title="Add New Personal Recipe" size="xl" ok-only hide-footer>
         <NewRecipeModal />
       </b-modal>
   </div>
