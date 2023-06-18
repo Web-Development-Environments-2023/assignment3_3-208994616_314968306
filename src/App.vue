@@ -5,7 +5,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          
+
           <b-nav-item>
             <router-link :to="{ name: 'main' }">Home</router-link>
           </b-nav-item>
@@ -18,7 +18,7 @@
             <router-link :to="{ name: 'about' }">About Us</router-link>
           </b-nav-item>
           
-          <b-nav-item-dropdown text="User Pages" right v-if="$root.store.username">
+          <b-nav-item-dropdown text="Personal" right v-if="$root.store.username">
             <b-dropdown-group>
               <b-dropdown-item>
                 <router-link :to="{ name: 'favorites' }">Favorites</router-link>
