@@ -2,28 +2,51 @@
 <template>
   <div class="container">
     <h1 class="title">Lior & Saar Recipes</h1>
-    <RecipePreviewList title="Explore these recipes" class="RandomRecipes center" />
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    {{ !$root.store.username }}
-    <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true
-      }"
-      disabled
-    ></RecipePreviewList>
+    <div class="row">
+      <div class="col">
+        <RecipePreviewList title="Explore these recipes" class="RandomRecipes center" >
+          <b-button>Refresh Recipes</b-button>
+        </RecipePreviewList>
+      </div>
+      <div class="col">
+          <RecipePreviewList v-if="$root.store.username"
+                             title="Last Watched Recipes"
+                             class="Recipes center"
+                             :getLastWatchedRecipes="getLastWatchedRecipes" 
+                             >
+          </RecipePreviewList>
+          <Login v-else></Login>            
+      </div>
+    </div>
   </div>
 </template>
 
+
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
-export default {
-  components: {
-    RecipePreviewList
-  }
-};
+  import RecipePreviewList from "../components/RecipePreviewList";
+  import Login from "./LoginPage.vue";
+  
+  export default {
+      components: {
+          RecipePreviewList,
+          Login
+      },
+      methods: {
+          async getLastWatchedRecipes() {
+            try {
+              const response = await this.axios.get(
+                this.$root.store.server_domain + "/users/threeLastWatchedRecipes",
+              );
+              const recipes = response.data;
+              this.recipes = [];
+              this.recipes.push(...recipes);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+      }
+  };
+  
 </script>
 
 <style lang="scss" scoped>
