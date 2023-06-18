@@ -39,6 +39,8 @@ import {
   LayoutPlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
+import { BModal } from 'bootstrap-vue'
+Vue.component('b-modal', BModal)
 
 axios.interceptors.request.use(
   function(config) {

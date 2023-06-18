@@ -14,7 +14,7 @@
           <b-nav-item>
             <router-link :to="{ name: 'about' }">About Us</router-link>
           </b-nav-item>
-          <b-nav-item-dropdown text="Personal" right v-if="$root.store.username">
+          <b-nav-item-dropdown text="User Pages" right v-if="$root.store.username">
             <b-dropdown-group>
               <b-dropdown-item>
                 <router-link :to="{ name: 'favorites' }">Favorites</router-link>
@@ -28,7 +28,7 @@
             </b-dropdown-group>
           </b-nav-item-dropdown>
           <b-nav-item>
-            <router-link :to="{ name: 'addRecipe' }">Create new Recipe</router-link>
+            <button @click="openNewRecipeModal">New Recipe</button>
           </b-nav-item>
         </b-navbar-nav>
 
@@ -56,13 +56,20 @@
     </b-navbar>
 
     <router-view />
+      <b-modal id="new-recipe-modal" ref="newRecipeModal" title="Add New Personal Recipe" size="xl" ok-only hide-footer>
+        <NewRecipeModal />
+      </b-modal>
   </div>
 </template>
 
 
 <script>
+import NewRecipeModal from "@/components/AddNewRecipeModal.vue";
 export default {
   name: "App",
+  components: {
+    NewRecipeModal
+  },
   methods: {
     async Logout() {
       this.$root.store.logout();
@@ -73,6 +80,9 @@ export default {
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    async openNewRecipeModal() {
+      this.$refs.newRecipeModal.show();
     }
   }
 };
