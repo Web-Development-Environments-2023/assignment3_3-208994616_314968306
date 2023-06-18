@@ -5,15 +5,19 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
+          
           <b-nav-item>
             <router-link :to="{ name: 'main' }">Home</router-link>
           </b-nav-item>
+
           <b-nav-item>
             <router-link :to="{ name: 'search' }">Search</router-link>
           </b-nav-item>
+
           <b-nav-item>
             <router-link :to="{ name: 'about' }">About Us</router-link>
           </b-nav-item>
+          
           <b-nav-item-dropdown text="User Pages" right v-if="$root.store.username">
             <b-dropdown-group>
               <b-dropdown-item>
@@ -27,9 +31,11 @@
               </b-dropdown-item>
             </b-dropdown-group>
           </b-nav-item-dropdown>
-          <b-nav-item>
-            <button @click="openNewRecipeModal">New Recipe</button>
+
+          <b-nav-item v-if="$root.store.username">
+              <button @click="openNewRecipeModal">New Recipe</button>
           </b-nav-item>
+          
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
@@ -45,7 +51,6 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
               <em>{{ $root.store.username }}</em>
             </template>
