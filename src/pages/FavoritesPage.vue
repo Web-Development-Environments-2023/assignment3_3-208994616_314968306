@@ -1,7 +1,36 @@
 <template>
-    <div class="container">
-      <h1>My Favorites</h1>
-      <router-link to="/" exact>Go Home</router-link>
+  <div class="container" id="mainPage">
+    <div class="column" id="left">
+      <RecipePreviewList title="My Favorite Recipes" 
+                                    class="RandomRecipes center" 
+                                    :getRecipes="getFavoriteRecipes" 
+                                    :getWatched="getWatchedRecipes"
+                                    :getFavorites="getFavoriteRecipes"
+                                    >
+      </RecipePreviewList>
     </div>
-  </template>
+    <router-link to="/" exact>Go Home</router-link>
+
+  </div>
+</template>
+
+<script>
+import RecipePreviewList from "../components/RecipePreviewList";
+export default {
+  components: {
+    RecipePreviewList
+  },
+  methods:
+  {
+    getLastWatchedRecipes: async function () {
+            const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
+            return response.data;
+    },
+    getFavoriteRecipes: async function () {
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
+      return response.data;
+    }
+  }
+};
+</script>
   
