@@ -1,4 +1,177 @@
 <template>
+  <b-container class="container">
+      <div>
+        <b-form @submit="onSubmit" @reset="onReset">
+            <b-form-group id="input-group-1" label="Title:" label-for="input-1">
+                <b-form-input id="input-1" v-model="form.title" placeholder="Enter title" required>
+                </b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-2" label="Image:" label-for="input-2"
+                description="Make sure it's valid HTTP path.">
+                <b-form-input id="input-2" v-model="form.image" placeholder="Enter path" required>
+                </b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-5" label="Preparation Time (Minutes):" label-for="input-5">
+                <b-form-input id="input-5" v-model="form.time" type="number"
+                    placeholder="Enter preparation time" required></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-6" label="Number of Servings:" label-for="input-6">
+                <b-form-input id="input-6" v-model="form.servings" type="number" placeholder="Enter servings"
+                    required></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-7" label="Ingredients:" label-for="input-7">
+                <b-form-input id="input-7" v-model="form.ingredients" placeholder="Enter Ingredients" required>
+                </b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-8" label="Instructions:" label-for="input-8">
+                <b-form-input id="input-8" v-model="form.instructions" placeholder="Enter Instructions"
+                    required></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-4" class="justify-content-center">
+                <b-form-checkbox v-model="form.vegetarian" value="true">vegetarian</b-form-checkbox>
+                <b-form-checkbox v-model="form.vegan" value="true">vegan</b-form-checkbox>
+                <b-form-checkbox v-model="form.glutenFree" value="true">gluten free</b-form-checkbox>
+            </b-form-group>
+
+            <div class="row justify-content-center">
+                <b-button type="submit" variant="primary">Submit</b-button>
+                <b-button type="reset" variant="danger">Reset</b-button>
+            </div>
+        </b-form>
+      </div>
+    </b-container>
+</template>
+
+<script>
+
+// import _ from 'lodash';
+import { required, alpha, integer, url } from "vuelidate/lib/validators";
+
+export default {
+  name: "NewRecipeModal",
+  components: {
+
+  },
+  data() {
+      return {
+          showModal: true,
+          form: {
+              title: '',
+              image: '',
+              time: null,
+              servings: null,
+              ingredients: '',
+              instructions: '',
+              vegetarian: false,
+              vegan: false,
+              glutenFree: false,
+          },
+      };
+  },
+  validations: {
+    form: {
+      recipeName: {
+        required,
+        alpha,
+      },
+      cookingTime: {
+        integer,
+        required,
+      },
+      recipeImg: {
+        url,
+        required,
+      },
+      ingredients: {
+        required,
+      },
+      instructions: {
+        required,
+      },
+    },
+  },
+  methods: {
+      onSubmit(event) {
+          event.preventDefault()
+          //need to check validation
+          this.sendRequst();
+      },
+      async sendRequst() {
+          try {
+              const response = await this.axios.post(
+                  this.$root.store.server_domain +
+                  `/users/addNewRecipe`,
+                  {
+                      RecipeName: this.form.title,
+                      CookingTime: this.form.time,
+                      RecipeImg: this.form.image,
+                      isVegan: this.form.vegan,
+                      isVegetarian: this.form.vegetarian,
+                      GlutenFree: this.form.glutenFree,
+                      ingredients: this.form.ingredients,
+                      instructions: this.form.instructions,
+                      servings: this.form.servings
+                  }
+              );
+              this.$root.toast("Add New Recipe", "Recipe was added successfully", "success");
+              this.onReset();
+          } catch (error) {
+              console.log(error);
+          }
+      },
+
+      onReset(event) {
+          // event.preventDefault()
+          // Reset our form values
+          this.form.title = '',
+              this.form.image = '',
+              this.form.time = null,
+              this.form.servings = null,
+              this.form.ingredients = '',
+              this.form.instructions = '',
+              this.form.vegetarian = false,
+              this.form.vegan = false,
+              this.form.glutenFree = false,
+              // Trick to reset/clear native browser form validation state
+              this.show = false
+          this.$nextTick(() => {
+              this.show = true
+          })
+      },
+  },
+};
+</script>
+
+<style scoped>
+.btn {
+  margin: 0 10px;
+}
+.card {
+  width: 15vmax;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <template>
   <div id="wrapper">
     <div id="openModalDiv"></div>
     <h1></h1>
@@ -19,15 +192,15 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-form-group id="input-group-vegetarian" label-for="vegetarian">
-                  <input id="vegetarian" v-model="form.isVegetarian" type="checkbox" />
-                  <label for="vegetarian" class="checkboxes">Vegetarian</label>
+                <b-form-group id="input-group-vegetarian" label-for="isVegetarian">
+                  <input id="isVegetarian" v-model="form.isVegetarian" type="checkbox" />
+                  <label for="isVegetarian" class="checkboxes">Vegetarian</label>
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-form-group id="input-group-glutenFree" label-for="glutenFree">
-                  <input id="glutenFree" v-model="form.GlutenFree" type="checkbox" />
-                  <label for="glutenFree" class="checkboxes">Gluten Free</label>
+                <b-form-group id="input-group-glutenFree" label-for="GlutenFree">
+                  <input id="GlutenFree" v-model="form.GlutenFree" type="checkbox" />
+                  <label for="GlutenFree" class="checkboxes">Gluten Free</label>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -61,28 +234,27 @@
           </b-col>
         </b-row>
         <ol>
-          <li v-for="index in numberOfIng" :key="index" class="copy-row">
-              <b-col cols="12">
-                <b-row>
-                  <b-col cols="5">
-                    <b-form-group id="input-group-ingredientName" label-cols-sm="6" label="Ingredient Name:" label-for="ingredientName" >
-                      <b-form-input id="ingredientName" type="text" v-model="form.ingredients[index-1].ingredientName"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                  <b-col cols="4">
-                    <b-form-group id="input-group-measuringTool" label-cols-sm="6" label="Measuring Tool:" label-for="measuringTool" >
-                      <b-form-input id="measuringTool" type="text" v-model="form.ingredients[index-1].measuringTool"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-
-                  <b-col cols="2">
-                    <b-form-group id="input-group-amount" label-cols-sm="6" label="Amount:" label-for="amount" >
-                      <b-form-input id="amount" type="number" v-model="form.ingredients[index-1].amount"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-              </b-col>
-            </li>
+          <li v-for="(ingredient, index) in form.ingredients" :key="index" class="copy-row">
+            <b-col cols="12">
+              <b-row>
+                <b-col cols="5">
+                  <b-form-group :id="'input-group-ingredientName-' + index" label-cols-sm="6" label="Ingredient Name:" :label-for="'ingredientName-' + index" >
+                    <b-form-input :id="'ingredientName-' + index" type="text" v-model="ingredient.ingredientName"></b-form-input>
+                  </b-form-group>
+                </b-col>
+                <b-col cols="4">
+                  <b-form-group :id="'input-group-measuringTool-' + index" label-cols-sm="6" label="Measuring Tool:" :label-for="'measuringTool-' + index" >
+                    <b-form-input :id="'measuringTool-' + index" type="text" v-model="ingredient.measuringTool"></b-form-input>
+                  </b-form-group>
+                </b-col>
+                <b-col cols="2">
+                  <b-form-group :id="'input-group-amount-' + index" label-cols-sm="6" label="Amount:" :label-for="'amount-' + index" >
+                    <b-form-input :id="'amount-' + index" type="number" v-model="ingredient.amount"></b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+            </b-col>
+          </li>
         </ol>
         <b-row>
           <b-col cols="2">
@@ -93,8 +265,8 @@
           </b-col>
         </b-row>
         <ol>
-          <li v-for="index in numberOfInstructions" :key="index" class="copy-row">
-            <b-form-input id="instructions" v-model="form.instructions[index-1]" type="text" class="instruction-class"></b-form-input>t>
+          <li v-for="(instruction, index) in form.instructions" :key="index" class="copy-row">
+            <b-form-input v-model="form.instructions[index]" type="text" class="instruction-class"></b-form-input>
           </li>
         </ol>
         <b-button type="submit" variant="primary" class="mx-auto w-100">Save Recipe</b-button>
@@ -119,22 +291,21 @@ export default {
         isVegetarian: false,
         GlutenFree: false,
         instructions: [],
-        recipeOwner: "",
         servings: "",
       },
     };
   },
   validations: {
     form: {
-      RecipeName: {
+      recipeName: {
         required,
         alpha,
       },
-      CookingTime: {
+      cookingTime: {
         integer,
         required,
       },
-      RecipeImg: {
+      recipeImg: {
         url,
         required,
       },
@@ -144,36 +315,31 @@ export default {
       instructions: {
         required,
       },
-
     },
   },
   methods: {
     async onSave() {
-      console.log("name:", this.form.RecipeName)
-      if (!this.$v.form.$invalid) {
+      if (!this.$v.$invalid) {
         try {
           const response = await this.axios.post(this.$root.store.server_domain + "/users/addNewRecipe", this.form);
-          console.log(response)
-          // this.$router.push("/personal");
           if (response.status !== 200) {
             throw new Error("you have a problem");
           } else {
             // TODO A SUCCESS MESSAGE
           }
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
-      }
-      else {
+      } else {
+        this.$v.$touch();
         for (const field in this.$v.form.$params) {
           if (!this.$v.form[field].$dirty && this.$v.form[field].required) {
             console.log(`${field} is required.`);
-          }
-          else {
-            console.log("something went wring with new recipe form")
+          } else {
+            console.log("something went wrong with the new recipe form");
           }
         }
-    }
+      }
     },
     onAddIngredient() {
       this.form.ingredients.push({ ingredientName: "", measuringTool: "", amount: "" });
@@ -183,12 +349,12 @@ export default {
     },
   },
   computed: {
-    numberOfIng(){
+    numberOfIng() {
       return this.form.ingredients.length;
     },
-    numberOfInstructions(){
+    numberOfInstructions() {
       return this.form.instructions.length;
-    }
+    },
   },
 };
 </script>
@@ -208,4 +374,4 @@ export default {
 .btn-secondary {
   background-color: #587dc1;
 }
-</style>
+</style> -->

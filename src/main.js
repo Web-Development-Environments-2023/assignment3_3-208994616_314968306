@@ -2,19 +2,17 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
-import VueCookies from "vue-cookies";
-Vue.use(VueCookies);
-axios.defaults.withCredentials=true;
-
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import routes from "./routes";
 import VueRouter from "vue-router";
+import VueCookies from "vue-cookies";
 Vue.use(VueRouter);
+Vue.use(VueCookies);
 const router = new VueRouter({
   mode: "history",
   routes,
 });
-
+Vue.use(BootstrapVue)
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -29,6 +27,8 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  BModal,
+  ImagePlugin
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -41,11 +41,12 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  ImagePlugin,
+  IconsPlugin 
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
-import { BModal } from 'bootstrap-vue'
 Vue.component('b-modal', BModal)
-
+axios.defaults.withCredentials=true;
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent

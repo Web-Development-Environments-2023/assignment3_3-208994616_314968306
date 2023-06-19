@@ -5,7 +5,11 @@
       </h3>
       <b-row v-if="recipes.length">
           <b-col  v-for="r in recipes" :key="r.id">
-              <RecipePreview class="recipePreview" :recipe="r" />
+              <RecipePreview class="recipePreview" 
+                            :recipe="r" 
+                            :watched="watched.includes(r.id)" 
+                            :favorite="favorites.includes(r.id)"
+                            :addFavorite="addFavorite" />
           </b-col>
       </b-row>
       <div @click="setRecipes" class="slot-container">
@@ -17,6 +21,7 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
+
 export default {
 name: "RecipePreviewList",
 components: {
@@ -34,45 +39,76 @@ props: {
   getWatched: {
       type: Function,
       required: true
+  },
+  getFavorites: {
+      type: Function,
+      required: false
   }
 },
 data() {
   return {
     recipes: [],
-    watched: []
+    watched: [],
+    favorites: []
   };
 },
 mounted() {
   this.setWatchedRecipes();
+  this.setFavoriteRecipes();
   this.setRecipes();
+  // this.setPersonalRecipes();
+  // this.setfamilyRecipes();
 },
 methods: {
-  
   async setRecipes() {
-      try {
-        this.recipes = await this.getRecipes();
-        console.log(this.recipes);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async setWatchedRecipes() {
-      try {
-        if (this.$root.store.username) {
-          this.watched = await this.getWatched();
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      this.recipes = await this.getRecipes();
+      console.log(this.recipes);
+    } catch (error) {
+      console.log(error);
     }
-  // async addFavorite(recipeId) {
-  //   const response = await this.axios.post(
-  //       this.$root.store.server_domain + "/users/addToFavorites",
-  //       {
-  //         recipeId: recipeId
-  //       }
-  //   ).then(() => this.favorites.push(recipeId));
-  // }
+  },
+  async setWatchedRecipes() {
+    try {
+      if (this.$root.store.username) {
+        this.watched = await this.getWatched();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async setFavoriteRecipes() {
+    try {
+      if (this.$root.store.username) {
+        this.favorites = await this.getFavorites();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  // async setPersonalRecipes() {
+  //   try {
+  //     const response = await this.axios.get(
+  //     this.$root.store.server_domain + "/users/getCreatedRecipes",);
+  //     const recipes = response.data;
+  //     this.recipes = [];
+  //     this.recipes.push(...recipes);
+  //     }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // },
+  // async setfamilyRecipes() {
+  //  this.recipes = []
+  // },
+  async addFavorite(recipeId) {
+    const response = await this.axios.post(
+        this.$root.store.server_domain + "/users/addToFavorites",
+        {
+          recipeId: recipeId
+        }
+    ).then(() => this.favorites.push(recipeId));
+  }
 
 }
 };

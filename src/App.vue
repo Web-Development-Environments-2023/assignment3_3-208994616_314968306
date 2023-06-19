@@ -24,7 +24,7 @@
                 <router-link :to="{ name: 'favorites' }">Favorites</router-link>
               </b-dropdown-item>
               <b-dropdown-item>
-                <router-link :to="{ name: 'personal' }">My Recipes</router-link>
+                <router-link :to="{ name: 'myRecipes' }">My Recipes</router-link>
               </b-dropdown-item>
               <b-dropdown-item>
                 <router-link :to="{ name: 'family' }">Family Recipes</router-link>
