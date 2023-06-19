@@ -1,7 +1,7 @@
 <template>
   <div class="container" id="mainPage">
     <div class="column" id="left">
-      <RecipePreviewList title="My Favorite Recipes" 
+      <RecipePreviewList title="My Recipes" 
                                     class="RandomRecipes center" 
                                     :getRecipes="getCreatedRecipes" 
                                     :getCreated="getCreatedRecipes"
