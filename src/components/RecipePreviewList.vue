@@ -38,26 +38,30 @@ props: {
   },
   getWatched: {
       type: Function,
-      required: true
+      required: false
   },
   getFavorites: {
       type: Function,
       required: false
+  },
+  getCreatedRecipes: {
+    type: Function,
+    required: false
   }
 },
 data() {
   return {
     recipes: [],
     watched: [],
-    favorites: []
+    favorites: [],
+    created: []
   };
 },
 mounted() {
   this.setWatchedRecipes();
   this.setFavoriteRecipes();
   this.setRecipes();
-  // this.setPersonalRecipes();
-  // this.setfamilyRecipes();
+  this.setPersonalRecipes();
 },
 methods: {
   async setRecipes() {
@@ -86,21 +90,15 @@ methods: {
       console.log(error);
     }
   },
-  // async setPersonalRecipes() {
-  //   try {
-  //     const response = await this.axios.get(
-  //     this.$root.store.server_domain + "/users/getCreatedRecipes",);
-  //     const recipes = response.data;
-  //     this.recipes = [];
-  //     this.recipes.push(...recipes);
-  //     }
-  //   catch (error) {
-  //     console.log(error);
-  //   }
-  // },
-  // async setfamilyRecipes() {
-  //  this.recipes = []
-  // },
+  async setPersonalRecipes() {
+    try {
+      if (this.$root.store.username) {
+        this.created = await this.getCreated();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
   async addFavorite(recipeId) {
     const response = await this.axios.post(
         this.$root.store.server_domain + "/users/addToFavorites",
