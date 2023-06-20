@@ -2,6 +2,7 @@
   <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     class="recipe-preview"
+    @click="!created && addToWatched(recipe.id)"
   >
   
      <b-card
@@ -69,6 +70,10 @@ export default {
     },
     created: {
       type: Boolean,
+      required: true
+    },
+    addToWatched: {
+      type: Function,
       required: true
     },
   }

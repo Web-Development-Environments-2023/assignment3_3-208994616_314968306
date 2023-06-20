@@ -10,6 +10,7 @@
                             :watched="watched.includes(recipe.id)" 
                             :favorite="favorites.includes(recipe.id)"
                             :addFavorite="addFavorite"
+                            :addToWatched="addToWatched"
                             :created="created" />
           </b-col>
       </b-row>
@@ -100,8 +101,15 @@ methods: {
           recipeId: recipeId
         }
     ).then(() => this.favorites.push(recipeId));
+  },
+  async addToWatched(recipeId) {
+    const response = await this.axios.post(
+        this.$root.store.server_domain + "/users/addToWatched",
+        {
+          recipeId: recipeId
+        }
+    ).then(() => this.favorites.push(recipeId));
   }
-
 }
 };
 </script>
