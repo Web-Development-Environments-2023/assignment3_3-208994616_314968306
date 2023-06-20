@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .about-page {
-  max-width: 750px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -72,7 +72,6 @@ export default {
 }
 
 .family-recipe {
-  text-align: center;
   margin: 3vh;
 }
 
