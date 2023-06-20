@@ -4,7 +4,9 @@
       <RecipePreviewList title="My Favorite Recipes" 
                                     class="RandomRecipes center" 
                                     :getRecipes="getFavoriteRecipes" 
+                                    :getWatched="getLastWatchedRecipes"
                                     :getFavorites="getFavoriteRecipes"
+                                    :created=false
                                     >
       </RecipePreviewList>
     </div>
@@ -24,8 +26,12 @@ export default {
     getFavoriteRecipes: async function () {
       const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
       return response.data;
-    }
-  }
+    },
+    getLastWatchedRecipes: async function () {
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
+      return response.data;
+    },
+  },
 };
 </script>
   

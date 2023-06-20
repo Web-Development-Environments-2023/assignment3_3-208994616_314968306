@@ -7,6 +7,8 @@
                                   class="RandomRecipes center" 
                                   :getRecipes="getRandomRecipes" 
                                   :getWatched="getLastWatchedRecipes"
+                                  :getFavorites="getFavoriteRecipes"
+                                  :created=false
                                   >
                   <b-button>Refresh Recipes</b-button>
               </RecipePreviewList>
@@ -17,6 +19,8 @@
                                  class="RandomRecipes center" 
                                  :getRecipes="getLastWatchedRecipes"
                                  :getWatched="getLastWatchedRecipes"
+                                 :getFavorites="getFavoriteRecipes"
+                                 :created=false
                                  >
               </RecipePreviewList>
               <Login v-else></Login>            
@@ -36,13 +40,15 @@
       },
       methods: {
           getRandomRecipes: async function() {
-            const response = await this.axios.get(this.$root.store.server_domain + "/recipes/random"
-            );
-      
+            const response = await this.axios.get(this.$root.store.server_domain + "/recipes/random");
             return response.data;
           },
           getLastWatchedRecipes: async function () {
             const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
+            return response.data;
+          },
+          getFavoriteRecipes: async function () {
+            const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
             return response.data;
           }
       }

@@ -17,9 +17,11 @@
           <img src="../assets/vegan.png" v-if="recipe.vegan" title="Vegan" />
           <img src="../assets/vegetarian.png" v-if="recipe.vegetarian" title="Vegetarian" />
         </div> 
-        <p>Preperation time: {{ recipe.duration }} minutes</p>
-        <div class="indicators" v-if="$root.store.username">
-          <span class="likes" v-if="recipe.likes > 0">{{recipe.likes}}<b-icon-hand-thumbs-up /></span>
+        <div>
+          <p>Preperation time: {{ recipe.readyInMinutes }} minutes</p>
+        </div>
+        <div class="indicators" v-if="$root.store.username && !created">
+          <span class="likes" v-if="recipe.Likes > 0">{{recipe.Likes}}<b-icon-hand-thumbs-up /></span>
           <b-icon-eye-fill v-if="watched" />
           <b-icon-eye v-else />
           <b-icon-star-fill v-if="favorite" />
@@ -34,8 +36,13 @@
 export default {
   name: "RecipePreview",
   mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
+    this.axios
+    .get(this.recipe.image)
+    .then((i) => {
       this.image_load = true;
+    })
+    .catch((error) => {
+      console.log(error);
     });
   },
   data() {
@@ -59,7 +66,11 @@ export default {
   	addFavorite: {
       type: Function,
       required: true
-    }
+    },
+    created: {
+      type: Boolean,
+      required: true
+    },
   }
 };
 </script>

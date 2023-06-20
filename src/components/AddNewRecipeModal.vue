@@ -2,33 +2,33 @@
   <b-container class="container">
       <div>
         <b-form @submit="onSubmit" @reset="onReset">
-            <b-form-group id="input-group-1" label="Title:" label-for="input-1">
+            <b-form-group id="input-group-title" label="Title:" label-for="input-1">
                 <b-form-input id="input-1" v-model="form.title" placeholder="Enter title" required>
                 </b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-2" label="Image:" label-for="input-2"
-                description="Make sure it's valid HTTP path.">
-                <b-form-input id="input-2" v-model="form.image" placeholder="Enter path" required>
+            <b-form-group id="input-group-image" label="Image:" label-for="input-2"
+                description="insert image link from the internet.">
+                <b-form-input id="input-2" v-model="form.image" placeholder="Insert image link" required>
                 </b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-5" label="Preparation Time (Minutes):" label-for="input-5">
+            <b-form-group id="input-group-prep-time" label="Preparation Time (Minutes):" label-for="input-5">
                 <b-form-input id="input-5" v-model="form.time" type="number"
                     placeholder="Enter preparation time" required></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-6" label="Number of Servings:" label-for="input-6">
+            <b-form-group id="input-group-servings" label="Number of Servings:" label-for="input-6">
                 <b-form-input id="input-6" v-model="form.servings" type="number" placeholder="Enter servings"
                     required></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-7" label="Ingredients:" label-for="input-7">
+            <b-form-group id="input-group-ingredients" label="Ingredients:" label-for="input-7">
                 <b-form-input id="input-7" v-model="form.ingredients" placeholder="Enter Ingredients" required>
                 </b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-8" label="Instructions:" label-for="input-8">
+            <b-form-group id="input-group-instructions" label="Instructions:" label-for="input-8">
                 <b-form-input id="input-8" v-model="form.instructions" placeholder="Enter Instructions"
                     required></b-form-input>
             </b-form-group>
@@ -62,12 +62,12 @@ export default {
       return {
           showModal: true,
           form: {
-              title: '',
-              image: '',
+              title: "",
+              image: "",
               time: null,
               servings: null,
-              ingredients: '',
-              instructions: '',
+              ingredients: "",
+              instructions: "",
               vegetarian: false,
               vegan: false,
               glutenFree: false,
@@ -80,12 +80,16 @@ export default {
         required,
         alpha,
       },
+      recipeImg: {
+        url,
+        required,
+      },
       cookingTime: {
         integer,
         required,
       },
-      recipeImg: {
-        url,
+      servings: {
+        integer,
         required,
       },
       ingredients: {
@@ -94,19 +98,18 @@ export default {
       instructions: {
         required,
       },
+
     },
   },
   methods: {
       onSubmit(event) {
           event.preventDefault()
-          //need to check validation
-          this.sendRequst();
+          this.AddRecipe();
       },
-      async sendRequst() {
+      async AddRecipe() {
           try {
               const response = await this.axios.post(
-                  this.$root.store.server_domain +
-                  `/users/addNewRecipe`,
+                  this.$root.store.server_domain + `/users/addNewRecipe`,
                   {
                       RecipeName: this.form.title,
                       CookingTime: this.form.time,

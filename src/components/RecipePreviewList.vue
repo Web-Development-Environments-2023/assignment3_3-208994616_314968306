@@ -4,12 +4,13 @@
           {{ title }}:
       </h3>
       <b-row v-if="recipes.length">
-          <b-col  v-for="r in recipes" :key="r.id">
+          <b-col v-for="recipe in recipes" :key="recipe.id">
               <RecipePreview class="recipePreview" 
-                            :recipe="r" 
-                            :watched="watched.includes(r.id)" 
-                            :favorite="favorites.includes(r.id)"
-                            :addFavorite="addFavorite" />
+                            :recipe="recipe" 
+                            :watched="watched.includes(recipe.id)" 
+                            :favorite="favorites.includes(recipe.id)"
+                            :addFavorite="addFavorite"
+                            :created="created" />
           </b-col>
       </b-row>
       <div @click="setRecipes" class="slot-container">
@@ -20,8 +21,7 @@
 </template>
 
 <script>
-import RecipePreview from "./RecipePreview.vue";
-
+import RecipePreview from "./RecipePreview.vue"
 export default {
 name: "RecipePreviewList",
 components: {
@@ -38,38 +38,41 @@ props: {
   },
   getWatched: {
       type: Function,
-      required: false
+      required: true
   },
   getFavorites: {
       type: Function,
-      required: false
+      required: true
   },
   getCreatedRecipes: {
     type: Function,
     required: false
-  }
+  },
+  created: {
+      type: Boolean,
+      required: true
+  },
 },
 data() {
   return {
     recipes: [],
     watched: [],
     favorites: [],
-    created: []
   };
 },
 mounted() {
-  this.setWatchedRecipes();
-  this.setFavoriteRecipes();
   this.setRecipes();
-  this.setPersonalRecipes();
+  if (this.getWatched !== undefined) 
+    this.setWatchedRecipes();
+  if (this.getFavorites !== undefined) 
+    this.setFavoriteRecipes();
 },
 methods: {
   async setRecipes() {
     try {
       this.recipes = await this.getRecipes();
-      console.log(this.recipes);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   },
   async setWatchedRecipes() {
@@ -78,7 +81,7 @@ methods: {
         this.watched = await this.getWatched();
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   },
   async setFavoriteRecipes() {
@@ -87,16 +90,7 @@ methods: {
         this.favorites = await this.getFavorites();
       }
     } catch (error) {
-      console.log(error);
-    }
-  },
-  async setPersonalRecipes() {
-    try {
-      if (this.$root.store.username) {
-        this.created = await this.getCreated();
-      }
-    } catch (error) {
-      console.log(error);
+      console.log(error.response);
     }
   },
   async addFavorite(recipeId) {
