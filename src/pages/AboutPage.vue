@@ -14,13 +14,14 @@
       </div>
     </div>
     <p>
-      Our esteemed partner, Saar, a culinary virtuoso, brings his exceptional expertise and passion for cooking to the forefront, ensuring each recipe is a masterpiece in its own right.
+      Saar, our esteemed partner, a culinary virtuoso, brings his exceptional expertise and passion for cooking to the forefront, ensuring each recipe is a masterpiece in its own right.
     </p>
     <p>
-      As for me, Lior, a seasoned chef with an insatiable appetite for creating exquisite dishes, I am thrilled to share my culinary knowledge and insights with you.
+      Lior, a seasoned chef with an insatiable appetite for creating exquisite dishes, I am thrilled to share my culinary knowledge and insights with you.
     </p>
     <p>
-      Together, Saar and I are dedicated to providing you with a treasure trove of gastronomic wonders that will transport your senses to far-flung lands with every bite. Get ready to embark on a culinary journey like no other!    </p>
+      Together, Saar and Lior are dedicated to providing you with a treasure trove of gastronomic wonders that will transport your senses to far-flung lands with every bite. Get ready to embark on a culinary journey like no other!    
+    </p>
     
   </div>
 </template>
