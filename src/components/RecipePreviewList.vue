@@ -4,7 +4,7 @@
           {{ title }}:
       </h3>
       <b-row v-if="recipes.length">
-          <b-col v-for="recipe in recipes" :key="recipe.id">
+          <b-row v-for="recipe in recipes" :key="recipe.id">
               <RecipePreview class="recipePreview" 
                             :recipe="recipe" 
                             :watched="watched.includes(recipe.id)" 
@@ -12,7 +12,7 @@
                             :addFavorite="addFavorite"
                             :addToWatched="addToWatched"
                             :created="created" />
-          </b-col>
+          </b-row>
       </b-row>
       <div @click="setRecipes" class="slot-container">
           <slot></slot>
@@ -71,6 +71,7 @@ mounted() {
 methods: {
   async setRecipes() {
     try {
+      this.recipes = []
       this.recipes = await this.getRecipes();
     } catch (error) {
       console.log(error.response);
@@ -79,6 +80,7 @@ methods: {
   async setWatchedRecipes() {
     try {
       if (this.$root.store.username) {
+        this.watched = []
         this.watched = await this.getWatched();
       }
     } catch (error) {
@@ -88,6 +90,7 @@ methods: {
   async setFavoriteRecipes() {
     try {
       if (this.$root.store.username) {
+        this.favorites = []
         this.favorites = await this.getFavorites();
       }
     } catch (error) {
@@ -108,7 +111,7 @@ methods: {
         {
           recipeId: recipeId
         }
-    ).then(() => this.favorites.push(recipeId));
+    ).then(() => this.watched.push(recipeId));
   }
 }
 };
@@ -116,12 +119,14 @@ methods: {
 
 <style lang="scss" scoped>
 .col {
-  padding-left: 5px;
-  padding-right: 5px;
+  justify-content: center;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
 }
 
 .slot-container {
-  margin-top: 10px;
+  margin-top: 2vw;
   text-align: center;
 }
+
 </style>

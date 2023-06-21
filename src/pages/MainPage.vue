@@ -10,7 +10,7 @@
                                   :getFavorites="getFavoriteRecipes"
                                   :created=false
                                   >
-                  <b-button>Refresh Recipes</b-button>
+                  <b-button class="refresh-button">More Recipes</b-button>
               </RecipePreviewList>
           </div>
           <div class="col">
@@ -57,9 +57,29 @@
 </script>
 
 <style lang="scss" scoped>
-.RandomRecipes {
-margin: 10px 0 10px;
+
+.refresh-button {
+  font-size: 3vw;
+  background-color: rgb(0, 191, 255);
+  color: black;
+  display: flex;
+  justify-content: center;
 }
+.container h1 {
+  font-size: 5vw;
+  margin-bottom: 1.5vw;
+  margin-top: 1.5vw;
+  text-align: center;
+}
+.RandomRecipes {
+margin: 3vw 8vw 2vw;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
 .blur {
 -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
 filter: blur(2px);

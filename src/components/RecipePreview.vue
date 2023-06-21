@@ -2,7 +2,7 @@
   <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     class="recipe-preview"
-    @click="!created && addToWatched(recipe.id)"
+    @click.native="addToWatched(recipe.id)"
   >
   
      <b-card
@@ -25,7 +25,7 @@
           <span class="likes" v-if="recipe.Likes > 0">{{recipe.Likes}}<b-icon-hand-thumbs-up /></span>
           <b-icon-eye-fill v-if="watched" />
           <b-icon-eye v-else />
-          <b-icon-star-fill v-if="favorite" />
+          <b-icon-star-fill v-if="favorite" class="favorite-icon" />
           <b-icon-star v-else @click.stop.prevent="() => addFavorite(recipe.id)" />
         </div>
       </template>
@@ -82,7 +82,6 @@ export default {
 
 <style lang="scss" scoped>
 .recipe-preview {
-  display: inline-block;
   width: 100%;
   height: 100%;
   text-decoration: none;
@@ -96,6 +95,9 @@ export default {
     overflow: hidden;
 
     .card-img {
+      width: 25vw;
+      height: 25vw;
+      object-fit: cover;
       transition: transform .5s ease;
 
       &:hover {
@@ -103,47 +105,52 @@ export default {
       }
     }
     .card-body {
-      padding: 5px;
-      background-color: white;
+      padding: 1vw;
+      width: 25vw;
+      background-color: black;
       z-index: 1;
+      margin-bottom: 1vw;
 
       .card-title {
-        font-size: 18px;
-        color: #1b2e3e;
+        font-size: 1.5vw;
+        color: white;
         margin: 0;
       }
     }
     .card-footer {
-      padding: 0 5px 10px 5px;
+      padding: 0 1vh 2vh 1vh;
       background-color: unset;
       border-top: unset;
 
       p {
-        font-size: 12px;
+        font-size: 2.5vh;
         color: #93a4b0;
         margin: 0;
       }
 
       .indicators {
         & > * {
-          margin: 0 5px;
+          margin: 2vh 2vh 2vh;
           color: black;
-          font-size: 25px;
+          font-size: 5vh;
         }
 
         .likes {
           float: right;
-          font-size: 18px;
+          font-size: 3vh;
         }
       }
 
       .diet-indicators {
         img {
-          height: 30px;
-          margin-bottom: 10px;
+          height: 6vh;
+          margin-bottom: 0.5vw;
         }
       }
     } 
   }
+}
+.favorite-icon {
+  color: yellow;
 }
 </style>

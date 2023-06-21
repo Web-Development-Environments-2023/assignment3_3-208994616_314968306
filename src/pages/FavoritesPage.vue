@@ -1,7 +1,8 @@
 <template>
-  <div class="container" id="mainPage">
-    <div class="column" id="left">
-      <RecipePreviewList title="My Favorite Recipes" 
+  <div class="container" id="favoritePage">
+    <h1 class="title">My Favorite Recipes</h1>
+    <div class="row">
+      <RecipePreviewList
                                     class="RandomRecipes center" 
                                     :getRecipes="getFavoriteRecipes" 
                                     :getWatched="getLastWatchedRecipes"
@@ -13,6 +14,7 @@
     <router-link to="/" exact>Go Home</router-link>
 
   </div>
+
 </template>
 
 <script>
@@ -34,4 +36,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.container h1 {
+  font-size: 5vw;
+  margin-bottom: 1.5vw;
+  margin-top: 1.5vw;
+  text-align: center;
+}
+</style>
   
