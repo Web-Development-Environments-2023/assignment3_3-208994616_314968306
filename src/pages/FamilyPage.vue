@@ -48,25 +48,25 @@ export default {
 </script>
 
 <style scoped>
-.family-page {
-  max-width: 1000px;
+.about-page {
+  max-width: 80%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 3vh;
 }
 
-.family-page h1 {
-  font-size: 4vw;
+.about-page h1 {
+  font-size: 3vw;
   margin-bottom: 1.5vw;
 }
 
-.family-page h2 {
-  font-size: 2.5vw;
+.about-page h2 {
+  font-size: 2vw;
   margin-top: 2vw;
   margin-bottom: 1.5vw;
 }
 
-.family-page p {
-  font-size: 1.8vw;
+.about-page p {
+  font-size: 1vw;
   line-height: 1.5;
 }
 
@@ -86,14 +86,14 @@ export default {
 }
 
 .family-recipe h2 {
-  font-size: 2vw;
+  font-size: 1.5vw;
 }
 
 .family-recipe h3 {
-  font-size: 3vw;
+  font-size: 2vw;
 }
 
 .family-recipe ul {
-  font-size: 1.5vw;
+  font-size: 1vw;
 }
 </style>
