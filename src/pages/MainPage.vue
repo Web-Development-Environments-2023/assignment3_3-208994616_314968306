@@ -88,4 +88,5 @@ filter: blur(2px);
 pointer-events: none;
 cursor: default;
 }
+
 </style>

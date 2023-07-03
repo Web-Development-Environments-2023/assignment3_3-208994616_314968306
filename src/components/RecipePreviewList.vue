@@ -118,10 +118,10 @@ methods: {
 </script>
 
 <style lang="scss" scoped>
-.col {
+.row {
   justify-content: center;
-  padding-left: 0.5vw;
-  padding-right: 0.5vw;
+  padding-left: 2vw;
+  padding-right: 4vw;
 }
 
 .slot-container {

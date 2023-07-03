@@ -81,6 +81,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.favorite {
+  color: yellow;
+}
 .recipe-preview {
   width: 100%;
   height: 100%;
@@ -150,7 +153,5 @@ export default {
     } 
   }
 }
-.favorite-icon {
-  color: yellow;
-}
+
 </style>
