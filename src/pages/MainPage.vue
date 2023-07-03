@@ -68,6 +68,7 @@
 .container h1 {
   font-size: 5vw;
   margin-bottom: 1.5vw;
+  font-weight: bold;
   margin-top: 1.5vw;
   text-align: center;
 }

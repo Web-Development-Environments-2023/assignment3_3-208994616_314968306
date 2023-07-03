@@ -33,7 +33,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item v-if="$root.store.username">
-              <button @click="openNewRecipeModal">New Recipe</button>
+              <button @click="openNewRecipeModal">Add Recipe</button>
           </b-nav-item>
           
         </b-navbar-nav>

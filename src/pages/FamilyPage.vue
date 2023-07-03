@@ -8,8 +8,8 @@
     <div class="family-recipes">
       <div v-for="recipe in familyRecipes" :key="recipe.title" class="family-recipe">
         <h3>{{ recipe.title }}</h3>
-        <h2>Chef: {{recipe.chef}}</h2>
-        <h2>{{recipe.tradition}}</h2>
+        <h4>Chef: {{recipe.chef}}</h4>
+        <h2>{{recipe.description}}</h2>
         <img :src="recipe.image" :alt="recipe.title" class="image" />
         <h2>Ingredients:</h2>
         <ul>
@@ -27,6 +27,7 @@
 
 <script>
 import jahnun from "../assets/jahnun.jpg"
+import shakshuka from "../assets/shakshuka.jpg"
 
 
 export default {
@@ -34,12 +35,21 @@ export default {
     return {
       familyRecipes: [
         {
-          title: "HOMEMADE JACHNUN FROM SCRATCH",
+          title: "HOMEMADE JACHNUN",
           chef:"Savta Miri",
-          tradition: "I make this dish every saturday morning.",
+          description: "Jachnun is an iconic Yemenite bread that is cooked low and slow with lots of oil. It's a little bit sweet, a little bit savory and a whole lot delectable. Traditionally Jachnun is eaten on Shabbat day with eggs, pickles and tomato dip, it's ideal because it can be place raw in the very low heat oven before Shabbat and cooks and stays hot without breaking any of the laws of Shabbat .",
           ingredients: ["8 cups all-purpose flour", "¼ cup sugar", "½ teaspoon baking powder", "2 tablespoons honey", "1 tablespoon kosher salt", "2½ cups warm water", "1 tablespoon olive oil, plus more for coating", "½ cup butter or ghee or olive oil, plus more as needed"],
           instructions: ["Place flour, sugar, baking powder, honey, and salt in a large bowl.", "Add water and stir until the dough is shaggy and the water has been absorbed.", "Knead the dough in the bowl for 2 minutes.", "Set the dough aside at room temperature to rest for 5 minutes.", "Stretch and fold the dough a few times until the dough feels nice and smooth.  Cover with a towel and set aside for 1 hour.", "Lightly oil a large container or glass casserole.  Oil your hands and coat the dough with a thin layer of oil.", "Separate the dough into 10 balls.  Roll each one into a tight ball and place in oiled container. Cover with a towel and let rest 5 minutes.", "Preheat oven to 225℉. Line a deep pot with parchment paper and lightly oil.", "For each ball generously coat with oil and flatten as thin as possible with the palm of your hands.", "Spread butter, ghee or olive oil over top.  Then beginning folding and rolling.", "Fold the left side over towards the center and then the right side.  From the narrow edge slowly roll up the dough into a tight cylinder.  Place in prepared pot in a single layer, top with parchment then add the second layer on top, across in a crosshatch pattern, repeat with a third layer.  Top with parchment and layer of raw eggs.", "Cover and seal pot tightly.  Place in oven and bake for 12 hours. The next morning remove from oven and serve with eggs, pickles and tomato dip."],
           image: jahnun
+        },
+
+        {
+          title: "EASY SHAKSHUKA",
+          chef:"Saba Hezi",
+          description: "Shakshuka is a North African and Middle Eastern meal of poached eggs in a simmering tomato sauce with spices. It's easy, healthy and takes less than 30 minutes to make. I make this dish when the grandchildren come over.",
+          ingredients: ["2 tablespoons olive oil", "1 medium onion, diced", "1 red bell pepper, seeded and diced", "4 garlic cloves, finely chopped", "2 teaspoon paprika", "1 teaspoon cumin", "¼ teaspoon chili powder", "1 28-ounce can whole peeled tomatoes", "6 large eggs", "salt and pepper, to taste", "1 small bunch fresh cilantro, chopped", "1 small bunch fresh parsley, chopped"],
+          instructions: ["Heat olive oil in a large sauté pan on medium heat. Add the chopped bell pepper and onion and cook for 5 minutes or until the onion becomes translucent.", "Add garlic and spices and cook an additional minute.", "Pour the can of tomatoes and juice into the pan and break down the tomatoes using a large spoon. Season with salt and pepper and bring the sauce to a simmer.", "Use your large spoon to make small wells in the sauce and crack the eggs into each well. Cover the pan and cook for 5-8 minutes, or until the eggs are done to your liking.", "Garnish with chopped cilantro and parsley."],
+          image: shakshuka
         }
       ]
     };
@@ -48,35 +58,31 @@ export default {
 </script>
 
 <style scoped>
-.about-page {
+.family-page {
   max-width: 80%;
   margin: 0 auto;
   padding: 3vh;
 }
 
-.about-page h1 {
-  font-size: 3vw;
-  margin-bottom: 1.5vw;
+.family-page h1 {
+  font-weight: bold;
+  font-size: 5vw;
+  margin-top: 1.5vw;
+  text-align: center;
 }
 
-.about-page h2 {
+.family-page p {
   font-size: 2vw;
-  margin-top: 2vw;
-  margin-bottom: 1.5vw;
-}
-
-.about-page p {
-  font-size: 1vw;
   line-height: 1.5;
 }
 
 .family-recipes {
-  display: flex;
   justify-content: center;
 }
 
 .family-recipe {
-  margin: 3vh;
+  margin-top: 6vw;
+  margin-bottom: 2vw;
 }
 
 .image {
@@ -86,14 +92,26 @@ export default {
 }
 
 .family-recipe h2 {
-  font-size: 1.5vw;
+  margin-top: 2vw;
+  font-size: 2vw;
+  font-weight: bold;
 }
 
 .family-recipe h3 {
+  margin-top: 1vw;
+  font-size: 3vw;
+  font-weight: bold;
+  color: goldenrod;
+}
+
+.family-recipe h4 {
+  margin-top: 1vw;
   font-size: 2vw;
+  font-weight: bold;
+  color: goldenrod;
 }
 
 .family-recipe ul {
-  font-size: 1vw;
+  font-size: 1.5vw;
 }
 </style>

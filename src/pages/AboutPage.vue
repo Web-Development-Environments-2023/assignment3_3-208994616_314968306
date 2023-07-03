@@ -59,14 +59,18 @@ export default {
 }
 
 .about-page h1 {
-  font-size: 4vw;
-  margin-bottom: 1.5vw;
+  font-size: 5vw;
+  margin-bottom: 1vw;
+  font-weight: bold;
+  margin-top: 1.5vw;
+  text-align: center;
 }
 
 .about-page h2 {
   font-size: 2.5vw;
   margin-top: 2vw;
   margin-bottom: 1.5vw;
+  text-align: center;
 }
 
 .about-page p {

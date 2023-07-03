@@ -14,8 +14,6 @@
       </div>
     </div>
     
-    <router-link to="/" exact>Go Home</router-link>
-
   </div>
 
 </template>
@@ -44,6 +42,7 @@ export default {
 .container h1 {
   font-size: 5vw;
   margin-bottom: 1vw;
+  font-weight: bold;
   margin-top: 1.5vw;
   text-align: center;
 }
