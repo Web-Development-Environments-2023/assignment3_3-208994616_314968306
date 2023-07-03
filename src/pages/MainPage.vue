@@ -4,7 +4,7 @@
       <div class="row">
           <div class="col">
               <RecipePreviewList title="Explore these recipes" 
-                                  class="RandomRecipes center" 
+                                  class="RandomRecipes center"
                                   :getRecipes="getRandomRecipes" 
                                   :getWatched="getLastWatchedRecipes"
                                   :getFavorites="getFavoriteRecipes"
@@ -16,7 +16,7 @@
           <div class="col">
               <RecipePreviewList v-if="$root.store.username"
                                  title="Last Viewed Recipes"
-                                 class="RandomRecipes center" 
+                                 class="RandomRecipes center"
                                  :getRecipes="getLastWatchedRecipes"
                                  :getWatched="getLastWatchedRecipes"
                                  :getFavorites="getFavoriteRecipes"
@@ -71,9 +71,11 @@
   font-weight: bold;
   margin-top: 1.5vw;
   text-align: center;
+  color: goldenrod;
 }
+
 .RandomRecipes {
-margin: 3vw 8vw 2vw;
+  margin: 3vw 8vw 2vw;
 }
 
 .row {
