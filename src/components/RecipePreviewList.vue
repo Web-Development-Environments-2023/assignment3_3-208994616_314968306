@@ -1,8 +1,5 @@
 <template>
   <b-container>
-      <h3>
-          {{ title }}:
-      </h3>
       <b-row v-if="recipes.length">
           <b-row v-for="recipe in recipes" :key="recipe.id">
               <RecipePreview class="recipePreview" 
@@ -121,7 +118,7 @@ methods: {
 .row {
   justify-content: center;
   padding-left: 2vw;
-  padding-right: 4vw;
+  padding-right: 6vw;
 }
 
 .slot-container {

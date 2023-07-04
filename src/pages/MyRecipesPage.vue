@@ -5,10 +5,10 @@
       <div class="col">
         <RecipePreviewList
                   class="RandomRecipes center" 
-                  :getRecipes="getCreatedRecipes" 
-                  :getWatched="emptyRecipes"
-                  :getFavorites="emptyRecipes"
-                  :created=true
+                  :getRecipes="getFavoriteRecipes" 
+                  :getWatched="getWatchedRecipeIds"
+                  :getFavorites="getFavoriteRecipeIds"
+                  :created=false
                   >
         </RecipePreviewList>
       </div>

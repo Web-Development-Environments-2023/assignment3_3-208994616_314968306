@@ -102,6 +102,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #0b0b0b;
   min-height: 100vh;
+  background-color: rgb(145, 149, 150);
 }
 
 /* Styles for the navigation bar */

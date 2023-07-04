@@ -3,7 +3,8 @@
       <h1 class="title">Lior & Saar Recipes</h1>
       <div class="row">
           <div class="col">
-              <RecipePreviewList title="Explore these recipes"
+              <h2>Explore these recipes:</h2>
+              <RecipePreviewList
                                   class="RandomRecipes center"
                                   :getRecipes="getRandomRecipes" 
                                   :getWatched="getWatchedRecipes"
@@ -14,8 +15,8 @@
               </RecipePreviewList>
           </div>
           <div class="col">
+              <h2>Last Viewed Recipes:</h2>
               <RecipePreviewList v-if="$root.store.username"
-                                 title="Last Viewed Recipes"
                                  class="RandomRecipes center"
                                  :getRecipes="getLastWatchedRecipes"
                                  :getWatched="getWatchedRecipes"
@@ -64,14 +65,15 @@
 
 .refresh-button {
   font-size: 3vw;
-  background-color: rgb(0, 191, 255);
+  background-color: rgb(21, 95, 223);
   color: black;
   display: flex;
   justify-content: center;
+  margin-left: 6vw;
 }
 .container h1 {
   font-size: 5vw;
-  margin-bottom: 1.5vw;
+  margin-bottom: 3vw;
   font-weight: bold;
   margin-top: 1.5vw;
   text-align: center;
@@ -79,7 +81,7 @@
 }
 
 .RandomRecipes {
-  margin: 3vw 8vw 2vw;
+  margin: 0.5vw 3vw 4vw;
 }
 
 .row {
@@ -87,8 +89,15 @@
   justify-content: center;
 }
 
+.col h2 {
+  font-size: 2vw;
+  color: rgb(21, 95, 223);
+  font-weight: bold;
+  margin-left: 10vw;
+}
+
 .blur {
--webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+-webkit-filter: blur(5px);
 filter: blur(2px);
 }
 ::v-deep .blur .recipe-preview {
