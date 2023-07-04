@@ -5,9 +5,9 @@
       <div class="col">
         <RecipePreviewList
                   class="RandomRecipes center" 
-                  :getRecipes="getFavoriteRecipes" 
-                  :getWatched="getWatchedRecipeIds"
-                  :getFavorites="getFavoriteRecipeIds"
+                  :getRecipes="getCreatedRecipes" 
+                  :getWatched="emptyRecipes"
+                  :getFavorites="emptyRecipes"
                   :created=false
                   >
         </RecipePreviewList>
