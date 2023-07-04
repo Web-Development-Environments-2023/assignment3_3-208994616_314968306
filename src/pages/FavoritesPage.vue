@@ -6,8 +6,8 @@
         <RecipePreviewList
                   class="RandomRecipes center" 
                   :getRecipes="getFavoriteRecipes" 
-                  :getWatched="getLastWatchedRecipes"
-                  :getFavorites="getFavoriteRecipes"
+                  :getWatched="getWatchedRecipeIds"
+                  :getFavorites="getFavoriteRecipeIds"
                   :created=false
                   >
         </RecipePreviewList>
@@ -30,8 +30,12 @@ export default {
       const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
       return response.data;
     },
-    getLastWatchedRecipes: async function () {
-      const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
+    getWatchedRecipeIds: async function () {
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/watchedRecipeIds");
+      return response.data;
+    },
+    getFavoriteRecipeIds: async function () {
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavoriteIds");
       return response.data;
     },
   },

@@ -3,10 +3,10 @@
       <h1 class="title">Lior & Saar Recipes</h1>
       <div class="row">
           <div class="col">
-              <RecipePreviewList title="Explore these recipes" 
+              <RecipePreviewList title="Explore these recipes"
                                   class="RandomRecipes center"
                                   :getRecipes="getRandomRecipes" 
-                                  :getWatched="getLastWatchedRecipes"
+                                  :getWatched="getWatchedRecipes"
                                   :getFavorites="getFavoriteRecipes"
                                   :created=false
                                   >
@@ -18,7 +18,7 @@
                                  title="Last Viewed Recipes"
                                  class="RandomRecipes center"
                                  :getRecipes="getLastWatchedRecipes"
-                                 :getWatched="getLastWatchedRecipes"
+                                 :getWatched="getWatchedRecipes"
                                  :getFavorites="getFavoriteRecipes"
                                  :created=false
                                  >
@@ -47,8 +47,12 @@
             const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
             return response.data;
           },
+          getWatchedRecipes: async function () {
+            const response = await this.axios.get(this.$root.store.server_domain + "/users/watchedRecipeIds");
+            return response.data;
+          },
           getFavoriteRecipes: async function () {
-            const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
+            const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavoriteIds");
             return response.data;
           }
       }
