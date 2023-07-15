@@ -1,18 +1,21 @@
 <template>
-  <div class="container" id="mainPage">
-    <div class="column" id="left">
-      <RecipePreviewList title="My Recipes" 
-                                    class="RandomRecipes center" 
-                                    :getRecipes="getCreatedRecipes" 
-                                    :getWatched="emptyRecipes"
-                                    :getFavorites="emptyRecipes"
-                                    :created=true
-                                    >
-      </RecipePreviewList>
+  <div class="container" id="myRecipesPage">
+    <h1 class="title">My Recipes</h1>
+    <div class="row">
+      <div class="col">
+        <RecipePreviewList
+                  class="RandomRecipes center" 
+                  :getRecipes="getCreatedRecipes" 
+                  :getWatched="emptyRecipes"
+                  :getFavorites="emptyRecipes"
+                  :created=false
+                  >
+        </RecipePreviewList>
+      </div>
     </div>
-    <router-link to="/" exact>Go Home</router-link>
-
+    
   </div>
+
 </template>
 
 <script>
@@ -33,4 +36,33 @@ export default {
   }
 };
 </script>
+
+<style>
+.container h1 {
+  font-size: 5vw;
+  margin-bottom: 1vw;
+  font-weight: bold;
+  margin-top: 1.5vw;
+  text-align: center;
+}
+
+.RandomRecipes {
+  margin: 3vw 8vw 2vw;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.blur {
+  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+  filter: blur(2px);
+  }
+  ::v-deep .blur .recipe-preview {
+  pointer-events: none;
+  cursor: default;
+  }
+
+</style>
   

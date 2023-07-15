@@ -33,7 +33,7 @@
           </b-nav-item-dropdown>
 
           <b-nav-item v-if="$root.store.username">
-              <button @click="openNewRecipeModal">New Recipe</button>
+              <button @click="openNewRecipeModal">Add Recipe</button>
           </b-nav-item>
           
         </b-navbar-nav>
@@ -102,6 +102,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #0b0b0b;
   min-height: 100vh;
+  background-color: rgb(145, 149, 150);
 }
 
 /* Styles for the navigation bar */
