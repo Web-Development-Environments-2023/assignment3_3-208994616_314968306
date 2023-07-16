@@ -1,24 +1,24 @@
 <template>
   <div class="container">
     <br />
-    <h1 class="title text-center">Search Page</h1>
+    <h1 class="title text-center">Search Recipes</h1>
     <div>
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-input v-model="form.query" placeholder="Search for recipe" required></b-form-input>
-        <br />
-        <br />
-        <b-form-group label-cols-sm="3" label="cuisine:" label-for="cuisine">
+        <b-form-input v-model="form.query" placeholder="Recipe Name" required></b-form-input>
+        <br/>
+        <br/>
+        <b-form-group label-cols-sm="3" label="Cuisine:" label-for="cuisine">
           <b-form-select id="cuisine" v-model="form.cuisine" :options="cuisines"></b-form-select>
         </b-form-group>
-        <br />
-        <b-form-group label-cols-sm="3" label="diet:" label-for="diet">
+        <br/>
+        <b-form-group label-cols-sm="3" label="Diet:" label-for="diet">
           <b-form-select id="diet" v-model="form.diet" :options="diets"></b-form-select>
         </b-form-group>
-        <br />
-        <b-form-group label-cols-sm="3" label="intolerance:" label-for="intolerance">
+        <br/>
+        <b-form-group label-cols-sm="3" label="Intolerance:" label-for="intolerance">
           <b-form-select id="intolerance" v-model="form.intolerance" :options="intolerances"></b-form-select>
         </b-form-group>
-        <br />
+        <br/>
         <b-form-group label-cols-sm="3" id="input-group-3" label="Number of Results:" label-for="input-3">
           <b-form-select id="input-3" v-model="form.numResults" :options="foods"></b-form-select>
         </b-form-group>
@@ -30,31 +30,31 @@
     </div>
 
     <div v-if="recipes.length > 0">
-      Order By:
+      Order Results By:
       <select v-model="sortby">
         <option value="likes">Likes</option>
-        <option value="timetomake">Time to make</option>
+        <option value="CookingTime">Cooking Time</option>
       </select>
       <br />
       <h4> Number of results: {{ recipes.length }}</h4>
 
       <b-row>
-      <b-row>
-        <RecipePreviewList title="Explore these recipes" 
-                                  class="RandomRecipes center" 
-                                  :getRecipes="orderedRecipes" 
-                                  :getWatched="getLastWatchedRecipes"
-                                  :getFavorites="getFavoriteRecipes"
-                                  :created=false
-                                  >
-        </RecipePreviewList>
-      </b-row>
+        <b-row>
+          <RecipePreviewList title="" 
+                                    class="RandomRecipes center" 
+                                    :getRecipes="orderedRecipes" 
+                                    :getWatched="getLastWatchedRecipes"
+                                    :getFavorites="getFavoriteRecipes"
+                                    :created=false
+                                    >
+          </RecipePreviewList>
+        </b-row>
       </b-row>
     </div>
 
     <div v-else-if="searched">
       <h5>
-        No recipes found.
+        No Recipes Found.
       </h5>
     </div>
 
@@ -78,8 +78,8 @@ export default {
       form: {
         query: "",
         cuisine: "",
-        intolerance: "",
         diet: "",
+        intolerance: "",
         numResults: 0,
       },
 
@@ -104,6 +104,12 @@ export default {
   },
 
   computed: {
+    orderedRecipes() {
+      if (this.sortby == 'CookingTime')
+        return _.orderBy(this.recipes, 'readyInMinutes');
+      else
+        return _.orderBy(this.recipes, 'aggregateLikes', 'desc');
+    },
   },
 
   methods: {
@@ -115,16 +121,18 @@ export default {
     async sendRequst() {
       try {
         const response = await this.axios.get(
-          this.$root.store.server_domain +
-          "/users/search",
+          `${this.$root.store.server_domain}/users/search`,
           {
-            query: this.form.query,
-            quantity: this.form.numResults,
-            cuisine: this.form.cuisine,
-            diet: this.form.diet,
-            intolerances: this.form.intolerance,
+            params: {
+              query: this.form.query,
+              quantity: this.form.numResults,
+              cuisine: this.form.cuisine,
+              diet: this.form.diet,
+              intolerances: this.form.intolerance,
+            },
           }
         );
+        console.log("query: ", this.form.query)
         const recipes_response = response.data;
         this.recipes = [];
         this.recipes.push(...recipes_response);
@@ -142,23 +150,17 @@ export default {
       const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
       return response.data;
     },
-    orderedRecipes: async function () {
-      if (this.sortby == 'timetomake')
-        return _.orderBy(this.recipes, 'readyInMinutes');
-      else
-        return _.orderBy(this.recipes, 'aggregateLikes', 'desc');
-    },
 
     onReset(event) {
       event.preventDefault();
-      // Reset our form values
       this.form.query = "";
+      this.form.diet = "",
       this.form.cuisine = "",
       this.form.intolerance = "",
-      this.form.diet = "",
       this.form.numResults = null,
       this.searched = false;
-      // Trick to reset/clear native browser form validation state
+
+      //Resetting validation state
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
