@@ -10,15 +10,12 @@
         <b-form-group label-cols-sm="3" label="Cuisine:" label-for="cuisine">
           <b-form-select id="cuisine" v-model="form.cuisine" :options="cuisines"></b-form-select>
         </b-form-group>
-        <br/>
         <b-form-group label-cols-sm="3" label="Diet:" label-for="diet">
           <b-form-select id="diet" v-model="form.diet" :options="diets"></b-form-select>
         </b-form-group>
-        <br/>
         <b-form-group label-cols-sm="3" label="Intolerance:" label-for="intolerance">
           <b-form-select id="intolerance" v-model="form.intolerance" :options="intolerances"></b-form-select>
         </b-form-group>
-        <br/>
         <b-form-group label-cols-sm="3" id="input-group-3" label="Number of Results:" label-for="input-3">
           <b-form-select id="input-3" v-model="form.numResults" :options="foods"></b-form-select>
         </b-form-group>
@@ -187,5 +184,8 @@ export default {
 }
 .RandomRecipes {
   margin: 3vw 8vw 2vw;
+}
+b-form-group {
+  padding-bottom: 20px;
 }
 </style>
