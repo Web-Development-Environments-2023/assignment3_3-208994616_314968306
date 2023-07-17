@@ -26,10 +26,6 @@ components: {
   RecipePreview
 },
 props: {
-  title: {
-      type: String,
-      required: true
-  },
   getRecipes: {
       type: Function,
       required: true
