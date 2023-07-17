@@ -36,20 +36,8 @@
 <script>
 export default {
   name: "RecipePreview",
-  mounted() {
-    this.axios
-    .get(this.recipe.image)
-    .then((i) => {
-      this.image_load = true;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  },
   data() {
-    return {
-      image_load: false
-    };
+    return {};
   },
   props: {
     recipe: {
