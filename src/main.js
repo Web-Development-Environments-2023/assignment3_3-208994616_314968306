@@ -71,7 +71,6 @@ axios.interceptors.response.use(
 );
 
 Vue.use(VueAxios, axios);
-
 Vue.config.productionTip = false;
 
 const shared_data = {
@@ -86,6 +85,7 @@ const shared_data = {
     console.log("logout");
     localStorage.removeItem("username");
     this.username = undefined;
+    sessionStorage.clear();
   },
 };
 new Vue({

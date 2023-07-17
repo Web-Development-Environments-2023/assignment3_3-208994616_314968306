@@ -40,10 +40,10 @@
 
       <b-row>
         <b-row>
-          <RecipePreviewList title="" 
+          <RecipePreviewList 
                                     class="RandomRecipes center" 
                                     :getRecipes="orderedRecipes" 
-                                    :getWatched="getLastWatchedRecipes"
+                                    :getWatched="getWatchedRecipes"
                                     :getFavorites="getFavoriteRecipes"
                                     :created=false
                                     >
@@ -100,22 +100,15 @@ export default {
     this.diets.push(...diet);
     this.intolerances.push(...intolerances);
     this.getFavoriteRecipes();
-    this.getLastWatchedRecipes();
+    this.getWatchedRecipes();
+    if (sessionStorage.lastSearch)
+      this.recipes = JSON.parse(sessionStorage.lastSearch);
   },
-
-  computed: {
-    orderedRecipes() {
-      if (this.sortby == 'CookingTime')
-        return _.orderBy(this.recipes, 'readyInMinutes');
-      else
-        return _.orderBy(this.recipes, 'aggregateLikes', 'desc');
-    },
-  },
-
   methods: {
     onSubmit(event) {
       event.preventDefault();
       this.sendRequst();
+      //this.orderedRecipes();
     },
 
     async sendRequst() {
@@ -132,25 +125,29 @@ export default {
             },
           }
         );
-        console.log("query: ", this.form.query)
         const recipes_response = response.data;
         this.recipes = [];
         this.recipes.push(...recipes_response);
-        console.log(this.recipes)
         this.searched = true;
+        sessionStorage.setItem("lastSearch", JSON.stringify(this.recipes));
       } catch (error) {
         console.log(error);
       }
     },
-    getLastWatchedRecipes: async function () {
-      const response = await this.axios.get(this.$root.store.server_domain + "/users/threeLastWatchedRecipes");
+    getWatchedRecipes: async function () {
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/watchedRecipeIds");
       return response.data;
     },
     getFavoriteRecipes: async function () {
-      const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavorites");
+      const response = await this.axios.get(this.$root.store.server_domain + "/users/getFavoriteIds");
       return response.data;
     },
-
+    orderedRecipes: async function () {
+      if (this.sortby == 'timetomake')
+        return _.orderBy(this.recipes, 'readyInMinutes');
+      else
+        return _.orderBy(this.recipes, 'aggregateLikes', 'desc');
+    },
     onReset(event) {
       event.preventDefault();
       this.form.query = "";
