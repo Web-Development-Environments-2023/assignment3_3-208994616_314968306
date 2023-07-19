@@ -2,14 +2,17 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import routes from "./routes";
 import VueRouter from "vue-router";
+import VueCookies from "vue-cookies";
 Vue.use(VueRouter);
+Vue.use(VueCookies);
 const router = new VueRouter({
+  mode: "history",
   routes,
 });
-
+Vue.use(BootstrapVue)
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -24,6 +27,8 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  BModal,
+  ImagePlugin
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -36,9 +41,12 @@ import {
   AlertPlugin,
   ToastPlugin,
   LayoutPlugin,
+  ImagePlugin,
+  IconsPlugin 
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
-
+Vue.component('b-modal', BModal)
+axios.defaults.withCredentials=true;
 axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
@@ -63,10 +71,10 @@ axios.interceptors.response.use(
 );
 
 Vue.use(VueAxios, axios);
-
 Vue.config.productionTip = false;
 
 const shared_data = {
+  server_domain: "http://127.0.0.1:3000",
   username: localStorage.username,
   login(username) {
     localStorage.setItem("username", username);
@@ -77,11 +85,9 @@ const shared_data = {
     console.log("logout");
     localStorage.removeItem("username");
     this.username = undefined;
+    sessionStorage.clear();
   },
 };
-console.log(shared_data);
-// Vue.prototype.$root.store = shared_data;
-
 new Vue({
   router,
   data() {

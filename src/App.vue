@@ -1,33 +1,93 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
-      <router-link :to="{ name: 'search' }">Search</router-link>|
-      {{ !$root.store.username }}
-      <span v-if="!$root.store.username">
-        Guest:
-        <router-link :to="{ name: 'register' }">Register</router-link>|
-        <router-link :to="{ name: 'login' }">Login</router-link>|
-      </span>
-      <span v-else>
-        {{ $root.store.username }}: <button @click="Logout">Logout</button>|
-      </span>
-    </div>
+    <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+
+          <b-nav-item>
+            <router-link :to="{ name: 'main' }">Home</router-link>
+          </b-nav-item>
+
+          <b-nav-item>
+            <router-link :to="{ name: 'search' }">Search</router-link>
+          </b-nav-item>
+
+          <b-nav-item>
+            <router-link :to="{ name: 'about' }">About Us</router-link>
+          </b-nav-item>
+          
+          <b-nav-item-dropdown text="Personal" right v-if="$root.store.username">
+            <b-dropdown-group>
+              <b-dropdown-item>
+                <router-link :to="{ name: 'favorites' }">Favorites</router-link>
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <router-link :to="{ name: 'myRecipes' }">My Recipes</router-link>
+              </b-dropdown-item>
+              <b-dropdown-item>
+                <router-link :to="{ name: 'family' }">Family Recipes</router-link>
+              </b-dropdown-item>
+            </b-dropdown-group>
+          </b-nav-item-dropdown>
+
+          <b-nav-item v-if="$root.store.username">
+              <button @click="openNewRecipeModal">Add Recipe</button>
+          </b-nav-item>
+          
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
+          <b-nav-item>
+            Hello guest:
+          </b-nav-item>
+          <b-nav-item>
+            <router-link :to="{ name: 'register' }">Register</router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link :to="{ name: 'login' }">Login</router-link>
+          </b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else>
+          <b-nav-item-dropdown right>
+            <template v-slot:button-content>
+              <em>{{ $root.store.username }}</em>
+            </template>
+            <b-dropdown-item @click="Logout">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+
     <router-view />
+      <b-modal id="new-recipe-modal" ref="newRecipeModal" title="Add New Personal Recipe" size="xl" ok-only hide-footer>
+        <NewRecipeModal />
+      </b-modal>
   </div>
 </template>
 
+
 <script>
+import NewRecipeModal from "@/components/AddNewRecipeModal.vue";
 export default {
   name: "App",
+  components: {
+    NewRecipeModal
+  },
   methods: {
-    Logout() {
+    async Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
+      const response = await this.axios.post(
+        this.$root.store.server_domain + "/Logout"
+      );
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
+    },
+    async openNewRecipeModal() {
+      this.$refs.newRecipeModal.show();
     }
   }
 };
@@ -40,20 +100,24 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #0b0b0b;
   min-height: 100vh;
+  background-color: rgb(145, 149, 150);
 }
 
-#nav {
-  padding: 30px;
+/* Styles for the navigation bar */
+#app .navbar-nav a.nav-link {
+  //color: #333;
+  font-size: 25px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#app .navbar-nav .dropdown-menu {
+  margin-top: 0;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.dropdown-menu .dropdown-item {
+  white-space: normal;
+  display: block;
 }
+
 </style>

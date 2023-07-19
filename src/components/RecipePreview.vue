@@ -1,141 +1,147 @@
 <template>
   <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+    :to="!created ? { name: 'recipe', params: { recipeId: recipe.id } } : { name: 'myrecipe', params: { recipe: JSON.stringify(recipe) } }"
     class="recipe-preview"
+    @click.native="addToWatched(recipe.id)"
   >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
-      </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-    </div>
+
+     <b-card
+      :title="recipe.title"
+      :img-src="recipe.image"
+      :img-alt="recipe.title"
+      footer-tag="footer"
+      class="mb-2"
+    >
+      <template #footer>
+        <div class="diet-indicators">
+          <img src="../assets/gluten.png" v-if="recipe.glutenFree" title="Gluten free" />
+          <img src="../assets/vegan.png" v-if="recipe.vegan" title="Vegan" />
+          <img src="../assets/vegetarian.png" v-if="recipe.vegetarian" title="Vegetarian" />
+        </div> 
+        <div>
+          <p>Preperation time: {{ recipe.readyInMinutes }} minutes</p>
+        </div>
+        <div class="indicators" v-if="$root.store.username && !created">
+          <span class="likes" v-if="recipe.Likes > 0">{{recipe.Likes}}<b-icon-hand-thumbs-up /></span>
+          <b-icon-eye-fill v-if="watched" />
+          <b-icon-eye v-else />
+          <b-icon-star-fill v-if="favorite" class="favorite-icon" />
+          <b-icon-star v-else @click.stop.prevent="() => addFavorite(recipe.id)" />
+        </div>
+      </template>
+    </b-card>
   </router-link>
+
+
 </template>
 
 <script>
 export default {
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
-  },
+  name: "RecipePreview",
   data() {
-    return {
-      image_load: false
-    };
+    return {};
   },
   props: {
     recipe: {
       type: Object,
       required: true
-    }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
+    },
+    watched: {
+      type: Boolean,
+      required: true
+    },
+    favorite: {
+      type: Boolean,
+      required: true
+    },
+  	addFavorite: {
+      type: Function,
+      required: true
+    },
+    created: {
+      type: Boolean,
+      required: true
+    },
+    addToWatched: {
+      type: Function,
+      required: true
+    },
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.favorite {
+  color: yellow;
+}
 .recipe-preview {
-  display: inline-block;
-  width: 90%;
+  width: 100%;
   height: 100%;
-  position: relative;
-  margin: 10px 10px;
-}
-.recipe-preview > .recipe-body {
-  width: 100%;
-  height: 200px;
-  position: relative;
+  text-decoration: none;
+
+  &:hover .card-title {
+    text-decoration: underline;
+  }
+
+  .card {
+    border: unset;
+    overflow: hidden;
+
+    .card-img {
+      width: 25vw;
+      height: 25vw;
+      object-fit: cover;
+      transition: transform .5s ease;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+    .card-body {
+      padding: 1vw;
+      width: 25vw;
+      background-color: black;
+      z-index: 1;
+      margin-bottom: 1vw;
+
+      .card-title {
+        font-size: 1.5vw;
+        color: white;
+        margin: 0;
+      }
+    }
+    .card-footer {
+      padding: 0 1vh 2vh 1vh;
+      background-color: unset;
+      border-top: unset;
+
+      p {
+        font-size: 2.5vh;
+        color: #93a4b0;
+        margin: 0;
+      }
+
+      .indicators {
+        & > * {
+          margin: 2vh 2vh 2vh;
+          color: black;
+          font-size: 5vh;
+        }
+
+        .likes {
+          float: right;
+          font-size: 3vh;
+        }
+      }
+
+      .diet-indicators {
+        img {
+          height: 6vh;
+          margin-bottom: 0.5vw;
+        }
+      }
+    } 
+  }
 }
 
-.recipe-preview .recipe-body .recipe-image {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  display: block;
-  width: 98%;
-  height: auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-}
-
-.recipe-preview .recipe-footer {
-  width: 100%;
-  height: 50%;
-  overflow: hidden;
-}
-
-.recipe-preview .recipe-footer .recipe-title {
-  padding: 10px 10px;
-  width: 100%;
-  font-size: 12pt;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
-.recipe-preview .recipe-footer ul.recipe-overview {
-  padding: 5px 10px;
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
-  flex: 1 auto;
-  table-layout: fixed;
-  margin-bottom: 0px;
-}
-
-.recipe-preview .recipe-footer ul.recipe-overview li {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-  width: 90px;
-  display: table-cell;
-  text-align: center;
-}
 </style>

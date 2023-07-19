@@ -1,61 +1,125 @@
 <template>
   <b-container>
-    <h3>
-      {{ title }}:
-      <slot></slot>
-    </h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
-      </b-col>
-    </b-row>
+      <b-row v-if="recipes.length">
+          <b-row v-for="recipe in recipes" :key="recipe.id">
+              <RecipePreview class="recipePreview" 
+                            :recipe="recipe" 
+                            :watched="watched.includes(recipe.id)" 
+                            :favorite="favorites.includes(recipe.id)"
+                            :addFavorite="addFavorite"
+                            :addToWatched="addToWatched"
+                            :created="created" />
+          </b-row>
+      </b-row>
+      <div @click="setRecipes" class="slot-container">
+          <slot></slot>
+      </div>
+
   </b-container>
 </template>
 
 <script>
-import RecipePreview from "./RecipePreview.vue";
+import RecipePreview from "./RecipePreview.vue"
 export default {
-  name: "RecipePreviewList",
-  components: {
-    RecipePreview
-  },
-  props: {
-    title: {
-      type: String,
+name: "RecipePreviewList",
+components: {
+  RecipePreview
+},
+props: {
+  getRecipes: {
+      type: Function,
       required: true
+  },
+  getWatched: {
+      type: Function,
+      required: true
+  },
+  getFavorites: {
+      type: Function,
+      required: true
+  },
+  getCreatedRecipes: {
+    type: Function,
+    required: false
+  },
+  created: {
+      type: Boolean,
+      required: true
+  },
+},
+data() {
+  return {
+    recipes: [],
+    watched: [],
+    favorites: [],
+  };
+},
+mounted() {
+  this.setRecipes();
+  if (this.getWatched !== undefined) 
+    this.setWatchedRecipes();
+  if (this.getFavorites !== undefined) 
+    this.setFavoriteRecipes();
+},
+methods: {
+  async setRecipes() {
+    try {
+      this.recipes = []
+      this.recipes = await this.getRecipes();
+    } catch (error) {
+      console.log(error.response);
     }
   },
-  data() {
-    return {
-      recipes: []
-    };
-  },
-  mounted() {
-    this.updateRecipes();
-  },
-  methods: {
-    async updateRecipes() {
-      try {
-        const response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
-        );
-
-        // console.log(response);
-        const recipes = response.data.recipes;
-        this.recipes = [];
-        this.recipes.push(...recipes);
-        // console.log(this.recipes);
-      } catch (error) {
-        console.log(error);
+  async setWatchedRecipes() {
+    try {
+      if (this.$root.store.username) {
+        this.watched = []
+        this.watched = await this.getWatched();
       }
+    } catch (error) {
+      console.log(error.response);
     }
+  },
+  async setFavoriteRecipes() {
+    try {
+      if (this.$root.store.username) {
+        this.favorites = []
+        this.favorites = await this.getFavorites();
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
+  },
+  async addFavorite(recipeId) {
+    const response = await this.axios.post(
+        this.$root.store.server_domain + "/users/addToFavorites",
+        {
+          recipeId: recipeId
+        }
+    ).then(() => this.favorites.push(recipeId));
+  },
+  async addToWatched(recipeId) {
+    const response = await this.axios.post(
+        this.$root.store.server_domain + "/users/addToWatched",
+        {
+          recipeId: recipeId
+        }
+    ).then(() => this.watched.push(recipeId));
   }
+}
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
-  min-height: 400px;
+.row {
+  justify-content: center;
+  padding-left: 2vw;
+  padding-right: 6vw;
 }
+
+.slot-container {
+  margin-top: 2vw;
+  text-align: center;
+}
+
 </style>
