@@ -38,12 +38,12 @@
       <b-row>
         <b-row>
           <RecipePreviewList 
-                                    class="RandomRecipes center" 
-                                    :getRecipes="orderedRecipes" 
-                                    :getWatched="getWatchedRecipes"
-                                    :getFavorites="getFavoriteRecipes"
-                                    :created=false
-                                    >
+            class="RandomRecipes center" 
+            :getRecipes="orderedRecipes" 
+            :getWatched="getWatchedRecipes"
+            :getFavorites="getFavoriteRecipes"
+            :created=false
+            >
           </RecipePreviewList>
         </b-row>
       </b-row>

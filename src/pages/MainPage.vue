@@ -5,24 +5,24 @@
           <div class="col">
               <h2>Explore these recipes:</h2>
               <RecipePreviewList
-                                  class="RandomRecipes center"
-                                  :getRecipes="getRandomRecipes" 
-                                  :getWatched="getWatchedRecipes"
-                                  :getFavorites="getFavoriteRecipes"
-                                  :created=false
-                                  >
-                  <b-button class="refresh-button">More Recipes</b-button>
+                class="RandomRecipes center"
+                :getRecipes="getRandomRecipes" 
+                :getWatched="getWatchedRecipes"
+                :getFavorites="getFavoriteRecipes"
+                :created=false
+                >
+                <b-button class="refresh-button">More Recipes</b-button>
               </RecipePreviewList>
           </div>
           <div class="col">
               <h2>Last Viewed Recipes:</h2>
               <RecipePreviewList v-if="$root.store.username"
-                                 class="RandomRecipes center"
-                                 :getRecipes="getLastWatchedRecipes"
-                                 :getWatched="getWatchedRecipes"
-                                 :getFavorites="getFavoriteRecipes"
-                                 :created=false
-                                 >
+                class="RandomRecipes center"
+                :getRecipes="getLastWatchedRecipes"
+                :getWatched="getWatchedRecipes"
+                :getFavorites="getFavoriteRecipes"
+                :created=false
+                >
               </RecipePreviewList>
               <Login v-else></Login>            
           </div>        
