@@ -8,7 +8,7 @@
           :getRecipes="getCreatedRecipes" 
           :getWatched="emptyRecipes"
           :getFavorites="emptyRecipes"
-          :created=false
+          :created=true
           >
         </RecipePreviewList>
       </div>

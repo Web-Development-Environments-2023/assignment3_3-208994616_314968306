@@ -1,10 +1,10 @@
 <template>
   <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+    :to="!created ? { name: 'recipe', params: { recipeId: recipe.id } } : { name: 'myrecipe', params: { recipe: JSON.stringify(recipe) } }"
     class="recipe-preview"
     @click.native="addToWatched(recipe.id)"
   >
-  
+
      <b-card
       :title="recipe.title"
       :img-src="recipe.image"
@@ -31,6 +31,8 @@
       </template>
     </b-card>
   </router-link>
+
+
 </template>
 
 <script>
