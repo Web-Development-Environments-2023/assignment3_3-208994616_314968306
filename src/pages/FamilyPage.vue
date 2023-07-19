@@ -28,6 +28,7 @@
 <script>
 import jahnun from "../assets/jahnun.jpg"
 import shakshuka from "../assets/shakshuka.jpg"
+import schnitzel from "../assets/schnitzel.jpg"
 
 
 export default {
@@ -50,6 +51,13 @@ export default {
           ingredients: ["2 tablespoons olive oil", "1 medium onion, diced", "1 red bell pepper, seeded and diced", "4 garlic cloves, finely chopped", "2 teaspoon paprika", "1 teaspoon cumin", "¼ teaspoon chili powder", "1 28-ounce can whole peeled tomatoes", "6 large eggs", "salt and pepper, to taste", "1 small bunch fresh cilantro, chopped", "1 small bunch fresh parsley, chopped"],
           instructions: ["Heat olive oil in a large sauté pan on medium heat. Add the chopped bell pepper and onion and cook for 5 minutes or until the onion becomes translucent.", "Add garlic and spices and cook an additional minute.", "Pour the can of tomatoes and juice into the pan and break down the tomatoes using a large spoon. Season with salt and pepper and bring the sauce to a simmer.", "Use your large spoon to make small wells in the sauce and crack the eggs into each well. Cover the pan and cook for 5-8 minutes, or until the eggs are done to your liking.", "Garnish with chopped cilantro and parsley."],
           image: shakshuka
+        },
+        {title: "CRISPY CHICKEN SCHNITZEL",
+          chef:"Shoshana Hamalca",
+          description: "We are about to share with you a secret schnitzel trick that may or may not change the way you make schnitzel. Forever. Chicken schnitzel has been eaten by Jews for centuries: In Austria under the name Wiener Schnitzel and in Italy as Cotoletta alla milanese. The schnitzel was finally introduced to Israel (Palestine at the time) by European immigrants moving to kibbutzim. Although they made schnitzel with veal and beef in Europe, chicken was always the cheapest option in Israel and now chicken schnitzel has become a staple on every Israeli family’s Shabbat table.",
+          ingredients: ["6 boneless, skinless chicken breasts", "1 cup all-purpose flour", "2 cups breadcrumbs", "3 eggs", "1 tablespoon Dijon mustard", "1 tablespoon lemon zest (This is the secret ingredient. It's actually amazing!)", "⅓ cup sesame seeds", "salt and pepper", "Extra virgin olive oil for frying", "Lemon wedges for garnish"],
+          instructions: ["Clean chicken breasts and rinse. Place between two layers of plastic wrap and hit with a mallet until 1/8th inch thickness. Have no mercy.", "Beat the eggs and stir in dijon mustard. Add lemon zest, sesame seeds salt and pepper to the breadcrumbs.", "Coat chicken breasts with flour completely and shake off excess. Dunk in the egg mixture, shake off excess. Finally the chicken goes into the breadcrumbs - make sure the chicken is completely and evenly covered.", "Bring oil in a frying pan to high heat. The oil should cover the schnitzel about halfway. Fry chicken on both sides until golden. Place on paper towels to soak up the leftover oil and serve with a lemon wedge."],
+          image: schnitzel
         }
       ]
     };

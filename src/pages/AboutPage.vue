@@ -22,6 +22,19 @@
     <p>
       Together, Saar and Lior are dedicated to providing you with a treasure trove of gastronomic wonders that will transport your senses to far-flung lands with every bite. Get ready to embark on a culinary journey like no other!    
     </p>
+
+    <div class="assignments">
+      <br>
+      <br>
+      <p>
+        Check out our last projects:
+      </p>
+        <a href="https://web-development-environments-2023.github.io/assignment2-314968306_208994616/" target="_blank">Guardians of the galaxy game</a>
+        <br>
+        <a href="https://web-development-environments-2023.github.io/314968306/" target="_blank">Eric Clapton (King of rock)</a>
+        <br>
+        <a href="https://web-development-environments-2023.github.io/208994616/" target="_blank">Churchill (One and only)</a>
+    </div>
     
   </div>
 </template>
@@ -99,6 +112,15 @@ export default {
 }
 
 .team-member p {
+  font-size: 2vw;
+}
+
+.assignments p {
+  font-size: 3vw;
+  font-weight: bold;
+} 
+
+.assignments a {
   font-size: 2vw;
 }
 </style>
