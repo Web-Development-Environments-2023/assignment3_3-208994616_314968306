@@ -4,12 +4,12 @@
     <div class="row">
       <div class="col">
         <RecipePreviewList
-          class="RandomRecipes center" 
-          :getRecipes="getCreatedRecipes" 
-          :getWatched="emptyRecipes"
-          :getFavorites="emptyRecipes"
-          :created=true
-          >
+                  class="RandomRecipes center" 
+                  :getRecipes="getCreatedRecipes" 
+                  :getWatched="emptyRecipes"
+                  :getFavorites="emptyRecipes"
+                  :created=true
+                  >
         </RecipePreviewList>
       </div>
     </div>
