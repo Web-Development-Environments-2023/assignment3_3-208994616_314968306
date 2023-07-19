@@ -25,9 +25,9 @@
           </div>
           <div class="wrapped">
             <div class="mb-3">
-              <div>GlutenFree: {{ recipe.GlutenFree }}</div>
-              <div>isVegan: {{ recipe.isVegan }}</div>
-              <div>isVegetarian: {{ recipe.isVegetarian }}</div>
+              <div>Gluten Free: {{ recipe.GlutenFree ? 'Yes' : 'No' }}</div>
+              <div>Vegan: {{ recipe.isVegan ? 'Yes' : 'No' }}</div>
+              <div>Vegetarian: {{ recipe.isVegetarian ? 'Yes' : 'No' }}</div>
             </div>
             Instructions:
             <ol>
